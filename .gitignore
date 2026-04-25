@@ -1,0 +1,27 @@
+# 1. 忽略所有文件和文件夹
+/*
+
+# 2. 允许上传 .gitignore 本身（否则下次拉取就失效了）
+!.gitignore
+
+# 3. 允许上传 code 文件夹及其下的所有内容
+!/code/
+
+# 3b. 允许上传 zf_driver 目录下的文件（编码器驱动等需要版本管理）
+!/libraries/
+libraries/*
+!libraries/zf_driver/
+libraries/zf_driver/*
+!libraries/zf_driver/zf_driver_encoder.c
+
+# 4. (可选) 如果你以后想在根目录加说明文档，可以放行 README
+!README.md
+!VERSION_LOG_2026-04-13.md
+!VERSION_LOG*.md
+!HANDOFF.md
+!.gitattributes
+!.editorconfig
+!ENCODING_WORKFLOW.md
+!/tools/
+!/tools/check-encoding.ps1
+!.gitattributes!

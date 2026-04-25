@@ -1,0 +1,31 @@
+#include "Encoder.h"
+
+void ENCODER_Init(void)
+{
+    encoder_quad_init(ENCODER_RIGHT, ENCODER_RIGHT_A, ENCODER_RIGHT_B);
+    encoder_clear_count(ENCODER_RIGHT);
+    encoder_quad_init(ENCODER_LEFT, ENCODER_LEFT_A, ENCODER_LEFT_B);
+    encoder_clear_count(ENCODER_LEFT);
+}
+
+void ENCODER_RevSample(void)
+{
+    motorStr.EncoderValue_R = ENCODER_RIGHT_DIR_SIGN * encoder_get_count(ENCODER_RIGHT);
+    encoder_clear_count(ENCODER_RIGHT);
+
+    motorStr.EncoderValue_L = ENCODER_LEFT_DIR_SIGN * encoder_get_count(ENCODER_LEFT);
+    encoder_clear_count(ENCODER_LEFT);
+
+    // PID 反馈
+    L_motor.vi_FeedBack = (float)motorStr.EncoderValue_L;
+    R_motor.vi_FeedBack = (float)motorStr.EncoderValue_R;
+
+    // 实际速度反馈 (m/s)
+    icarStr.SpeedFeedback = (float)(motorStr.EncoderValue_L * PI * motorStr.DiameterWheel)
+        / MOTOR_CONTROL_CYCLE / motorStr.EncoderLine / motorStr.ReductionRatio;
+
+    if(icarStr.SpeedFeedback > 0 && icarStr.SpeedFeedback > icarStr.SpeedMaxRecords)
+        icarStr.SpeedMaxRecords = icarStr.SpeedFeedback;
+    else if(icarStr.SpeedFeedback < 0 && -icarStr.SpeedFeedback > icarStr.SpeedMaxRecords)
+        icarStr.SpeedMaxRecords = -icarStr.SpeedFeedback;
+}
