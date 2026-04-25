@@ -33,6 +33,8 @@ typedef struct
     signed int samlpe;
     signed int EncoderValue_L;                    //编码器实时速度
     signed int EncoderValue_R;                    //编码器实时速度
+    signed int EncoderTotal_L;                    //左轮累计编码器计数
+    signed int EncoderTotal_R;                    //右轮累计编码器计数
     float DiameterWheel;                        //轮子直径：mm
     bool CloseLoop;                             //开环模式
     uint16_t Counter;                           //线程计数器

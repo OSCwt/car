@@ -16,5 +16,6 @@
 
 void ENCODER_Init(void);
 void ENCODER_RevSample(void);
+void ENCODER_ClearTotal(void);
 
 #endif

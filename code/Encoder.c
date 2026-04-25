@@ -6,6 +6,13 @@ void ENCODER_Init(void)
     encoder_clear_count(ENCODER_RIGHT);
     encoder_quad_init(ENCODER_LEFT, ENCODER_LEFT_A, ENCODER_LEFT_B);
     encoder_clear_count(ENCODER_LEFT);
+    ENCODER_ClearTotal();
+}
+
+void ENCODER_ClearTotal(void)
+{
+    motorStr.EncoderTotal_L = 0;
+    motorStr.EncoderTotal_R = 0;
 }
 
 void ENCODER_RevSample(void)
@@ -15,6 +22,9 @@ void ENCODER_RevSample(void)
 
     motorStr.EncoderValue_L = ENCODER_LEFT_DIR_SIGN * encoder_get_count(ENCODER_LEFT);
     encoder_clear_count(ENCODER_LEFT);
+
+    motorStr.EncoderTotal_L += motorStr.EncoderValue_L;
+    motorStr.EncoderTotal_R += motorStr.EncoderValue_R;
 
     // PID 反馈
     L_motor.vi_FeedBack = (float)motorStr.EncoderValue_L;

@@ -45,11 +45,13 @@ void MOTOR_Init(void)
     MOTOR_SetPwmValue(MOTOR2_PWM_PIN,0,1);
     //电机模型初始化
     motorStr.EncoderLine = 1024.0f;                        // 电机轴A相每圈脉冲数（方向计数口径1x）
-    motorStr.ReductionRatio = 30;
+    motorStr.ReductionRatio = 2.265625f;//2320 / 1024
 //    motorStr.ReductionRatio = 2.7f;                         //电机减速比
     motorStr.EncoderValue_L = 0;
     motorStr.EncoderValue_R = 0;
-    motorStr.DiameterWheel = 0.068f;//68cm                  //轮子直径:m
+    motorStr.EncoderTotal_L = 0;
+    motorStr.EncoderTotal_R = 0;
+    motorStr.DiameterWheel = 0.06685f;//21cm circumference / PI
     motorStr.CloseLoop = CLOSELOOP_DEFAULT;                              //默认闭环模式
     motorStr.PWM_L_value=0;
     motorStr.PWM_R_value=0;
@@ -179,4 +181,3 @@ void MOTOR_Timer(void)
 
     }
 }
-

@@ -43,6 +43,9 @@ void task_init(void)
     ips200pro_label_printf(label_ids[9], "roll=%.2f", 0.0f);
     ips200pro_label_printf(label_ids[10], "lap=0/3");
     ips200pro_label_printf(label_ids[11], "finish=NO");
+    ips200pro_label_printf(label_ids[12], "totalL=0");
+    ips200pro_label_printf(label_ids[13], "totalR=0");
+    ips200pro_label_printf(label_ids[14], "turn 10 laps");
 }
 
 void task(void)
@@ -62,6 +65,11 @@ void task(void)
     ips200pro_label_printf(label_ids[7], "Encoder_R=%f", (float)motorStr.EncoderValue_R);
     ips200pro_label_printf(label_ids[8], "PWM_L=%d", motorStr.PWM_L_value);
     ips200pro_label_printf(label_ids[9], "PWM_R=%d", motorStr.PWM_R_value);
+    ips200pro_label_printf(label_ids[10], "totalL=%d", motorStr.EncoderTotal_L);
+    ips200pro_label_printf(label_ids[11], "totalR=%d", motorStr.EncoderTotal_R);
+    ips200pro_label_printf(label_ids[12], "avg10L=%d", motorStr.EncoderTotal_L / 10);
+    ips200pro_label_printf(label_ids[13], "avg10R=%d", motorStr.EncoderTotal_R / 10);
+    ips200pro_label_printf(label_ids[14], "turn 10 laps");
 }
 
 void control(void)
@@ -85,4 +93,7 @@ void control(void)
     ips200pro_label_printf(label_ids[9], "pinR A=%u B=%u", enc_r_a, enc_r_b);
     ips200pro_label_printf(label_ids[10], "pinL A=%u B=%u", enc_l_a, enc_l_b);
     ips200pro_label_printf(label_ids[11], "yaw=%.2f roll=%.2f", attitudeDebug.yaw_continuous_deg, eulerAngle.roll);
+    ips200pro_label_printf(label_ids[12], "totalL=%d", motorStr.EncoderTotal_L);
+    ips200pro_label_printf(label_ids[13], "totalR=%d", motorStr.EncoderTotal_R);
+    ips200pro_label_printf(label_ids[14], "avg10 L=%d R=%d", motorStr.EncoderTotal_L / 10, motorStr.EncoderTotal_R / 10);
 }
