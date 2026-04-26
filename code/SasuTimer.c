@@ -40,6 +40,7 @@ IFX_INTERRUPT(cc60_pit_ch1_isr, 0, CCU6_0_CH1_ISR_PRIORITY)
     pit_clear_flag(CCU60_CH1);
 
     PID_debug_Timer();
+    PID_debug_Handle();
     MOTOR_Timer();
     //这是舵机的
     servo_time();

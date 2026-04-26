@@ -295,6 +295,7 @@ int32_t protocol_init(void)
  * @param   void
  * @return  -1：没有找到一个正确的命令.
  */
+
 int8_t receiving_process(void)
 {
   uint8_t frame_data[128];         // 要能放下最长的帧
@@ -398,6 +399,7 @@ void uart_transmit(uart_index_enum uart_n, const uint8 *buff, uint8 len)
 
 void set_computer_value(uint8_t cmd, uint8_t ch, void *data, uint8_t num)
 {
+
   uint8_t sum = 0;    // 校验和
   num *= 4;           // 一个参数 4 个字节
   
@@ -420,7 +422,9 @@ void set_computer_value(uint8_t cmd, uint8_t ch, void *data, uint8_t num)
   uart_write_buffer(UART_INDEX,(uint8_t *)data,num);
   uart_write_buffer(UART_INDEX,(uint8_t *)&sum,sizeof(sum));
 
+
 }
+
 uint8 Uart1Res;
 uint8 count_1;
 IFX_INTERRUPT(uart0_rx_isr, 0, UART0_RX_INT_PRIO)

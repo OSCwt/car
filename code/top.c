@@ -52,7 +52,7 @@ void task(void)
 {
     PID_debug_Handle();
     ips200pro_label_printf(label_ids[0], "P=%.2f I=%.2f D=%.2f", L_motor.v_Kp, L_motor.v_Ki, L_motor.v_Kd);
-    ips200pro_label_printf(label_ids[1], "speed=%f", icarStr.SpeedFeedback);
+    ips200pro_label_printf(label_ids[1], "speed=%f", icarStr.SpeedFeedback_L);
     ips200pro_label_printf(label_ids[2], "speedset=%f", icarStr.SpeedSet);
     if(piddebug.MotorEnable==true)
         ips200pro_label_printf(label_ids[3], "motor_on");
@@ -85,7 +85,7 @@ void control(void)
     ips200pro_label_printf(label_ids[1], "encR=%d", motorStr.EncoderValue_R);
     ips200pro_label_printf(label_ids[2], "spdL=%.3f", speed_l);
     ips200pro_label_printf(label_ids[3], "spdR=%.3f", speed_r);
-    ips200pro_label_printf(label_ids[4], "fb=%.3f set=%.3f", icarStr.SpeedFeedback, icarStr.SpeedSet);
+    ips200pro_label_printf(label_ids[4], "fb=%.3f set=%.3f", icarStr.SpeedFeedback_L, icarStr.SpeedSet);
     ips200pro_label_printf(label_ids[5], "refL=%.1f refR=%.1f", L_motor.vi_Ref, R_motor.vi_Ref);
     ips200pro_label_printf(label_ids[6], "pidL=%.1f pidR=%.1f", L_motor.vi_FeedBack, R_motor.vi_FeedBack);
     ips200pro_label_printf(label_ids[7], "pwmL=%d pwmR=%d", motorStr.PWM_L_value, motorStr.PWM_R_value);

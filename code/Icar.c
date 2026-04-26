@@ -29,7 +29,8 @@ void ICAR_Init(void)
     icarStr.Electricity = 0;                    //电量信息
     icarStr.Voltage = 0;                        //电压
     icarStr.SpeedSet = 0.0f;                    //电机目标速度：m/s
-    icarStr.SpeedFeedback = 0.0f;               //电机模型实测速度：m/s
+    icarStr.SpeedFeedback_L = 0.0f;               //电机模型实测速度：m/s
+    icarStr.SpeedFeedback_R = 0.0f;               //电机模型实测速度：m/s
     icarStr.SpeedMaxRecords = 0.0f;
     icarStr.ServoPwmSet = servoStr.thresholdMiddle;
 

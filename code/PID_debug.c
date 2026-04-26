@@ -91,20 +91,28 @@ void PID_debug_Handle()
     }
     if(piddebug.pidsend ==true)
     {
-        int temp;
-
+        int temp1;
+        int temp2;
         //set_computer_value(SEND_TARGET_CMD,CURVES_CH1,&(icarStr.SpeedSet),sizeof(icarStr.SpeedSet));
-        temp=(int)(100*icarStr.SpeedFeedback);
+        temp1=(int)(100*icarStr.SpeedFeedback_L);
+//        temp2=(int)(100*icarStr.SpeedFeedback_R);
 
+//        if(temp1>=0)
+//        {
+            set_computer_value(SEND_FACT_CMD,CURVES_CH1,&temp1,sizeof(temp1));
 
-        if(temp>=0)
-        {
-            set_computer_value(SEND_FACT_CMD,CURVES_CH1,&temp,sizeof(temp));
 //            temp=(int)(100*icarStr.SpeedSet);
 //            set_computer_value(SEND_FACT_CMD,CURVES_CH2,&temp,sizeof(temp));
-
-        }
-        temp=0;
+//        }
+//        if(temp2>=0)
+//        {
+//            set_computer_value(SEND_FACT_CMD,CURVES_CH2,&temp2,sizeof(temp2));
+//
+////            temp=(int)(100*icarStr.SpeedSet);
+////            set_computer_value(SEND_FACT_CMD,CURVES_CH2,&temp,sizeof(temp));
+//        }
+        temp1=0;
+//        temp2=0;
         piddebug.pidsend = false;
     }
 

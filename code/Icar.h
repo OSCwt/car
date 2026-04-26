@@ -38,7 +38,8 @@ typedef struct                              //[智能车驱动主板]
     float Voltage;                          //电池电压
     uint8_t Electricity;                    //电池电量百分比：0~100
     float SpeedSet;                         //电机目标速度：m/s
-    float SpeedFeedback;                    //电机模型实测速度：m/s
+    float SpeedFeedback_L;                    //电机模型实测速度：m/s
+    float SpeedFeedback_R;
     float SpeedMaxRecords;                  //测试记录最高速
     uint16_t ServoPwmSet;                   //舵机PWM设置
 

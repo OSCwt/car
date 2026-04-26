@@ -45,7 +45,7 @@ void MOTOR_Init(void)
     MOTOR_SetPwmValue(MOTOR2_PWM_PIN,0,1);
     //电机模型初始化
     motorStr.EncoderLine = 1024.0f;                        // 电机轴A相每圈脉冲数（方向计数口径1x）
-    motorStr.ReductionRatio = 2.265625f;//2320 / 1024
+    motorStr.ReductionRatio = 20;//2320 / 1024
 //    motorStr.ReductionRatio = 2.7f;                         //电机减速比
     motorStr.EncoderValue_L = 0;
     motorStr.EncoderValue_R = 0;
@@ -92,7 +92,6 @@ void MOTOR_SetPwmValue(pwm_channel_enum  MOTOR_PWM_PIN,signed int pwm,int i)
     else
     {
         motorStr.PWM_R_value=pwm;
-
     }
 
 
@@ -140,6 +139,11 @@ void MOTOR_Timer(void)
         if(piddebug.MotorEnable)
         {
             MOTOR_ControlLoop(icarStr.SpeedSet);
+        }
+        else
+        {
+            MOTOR_SetPwmValue(MOTOR1_PWM_PIN,0,0);
+            MOTOR_SetPwmValue(MOTOR2_PWM_PIN,0,1);
         }
 
         motorStr.Counter = 0;

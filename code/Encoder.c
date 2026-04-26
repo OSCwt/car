@@ -31,11 +31,13 @@ void ENCODER_RevSample(void)
     R_motor.vi_FeedBack = (float)motorStr.EncoderValue_R;
 
     // 实际速度反馈 (m/s)
-    icarStr.SpeedFeedback = (float)(motorStr.EncoderValue_L * PI * motorStr.DiameterWheel)
+    icarStr.SpeedFeedback_L = (float)(motorStr.EncoderValue_L * PI * motorStr.DiameterWheel)
         / MOTOR_CONTROL_CYCLE / motorStr.EncoderLine / motorStr.ReductionRatio;
+    icarStr.SpeedFeedback_R= (float)(motorStr.EncoderValue_R * PI * motorStr.DiameterWheel)
+                / MOTOR_CONTROL_CYCLE / motorStr.EncoderLine / motorStr.ReductionRatio;
+//    if(icarStr.SpeedFeedback_L > 0 && icarStr.SpeedFeedback_L > icarStr.SpeedMaxRecords)
+//        icarStr.SpeedMaxRecords = icarStr.SpeedFeedback_L;
+//    else if(icarStr.SpeedFeedback < 0 && -icarStr.SpeedFeedback_L > icarStr.SpeedMaxRecords)
+//        icarStr.SpeedMaxRecords = -icarStr.SpeedFeedback_L;
 
-    if(icarStr.SpeedFeedback > 0 && icarStr.SpeedFeedback > icarStr.SpeedMaxRecords)
-        icarStr.SpeedMaxRecords = icarStr.SpeedFeedback;
-    else if(icarStr.SpeedFeedback < 0 && -icarStr.SpeedFeedback > icarStr.SpeedMaxRecords)
-        icarStr.SpeedMaxRecords = -icarStr.SpeedFeedback;
 }
