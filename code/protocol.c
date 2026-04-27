@@ -342,11 +342,11 @@ int8_t receiving_process(void)
           encoder_clear_count(ENCODER_RIGHT);
           encoder_clear_count(ENCODER_LEFT);
           //这里也不需要
-          L_motor.vi_Ref = 0 ;
-          L_motor.vi_FeedBack = 0 ;
-          L_motor.vi_PreError = 0 ;
-          L_motor.vi_PreDerror = 0 ;
-          L_motor.vl_PreU = 0;
+          R_motor.vi_Ref = 0 ;
+          R_motor.vi_FeedBack = 0 ;
+          R_motor.vi_PreError = 0 ;
+          R_motor.vi_PreDerror = 0 ;
+          R_motor.vl_PreU = 0;
           piddebug.MotorEnable=true;              // 启动电机
       }
       break;

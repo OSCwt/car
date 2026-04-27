@@ -30,8 +30,8 @@ void PID_Init(void)
     L_motor.vi_FeedBack = 0 ;
     L_motor.vi_PreError = 0 ;
     L_motor.vi_PreDerror = 0 ;
-    L_motor.v_Kp = 2;
-    L_motor.v_Ki = 18;
+    L_motor.v_Kp = 1.2f;
+    L_motor.v_Ki = 1.2f;
     L_motor.v_Kd = 0;
     L_motor.vl_PreU = 0;
 
@@ -39,9 +39,9 @@ void PID_Init(void)
     R_motor.vi_FeedBack = 0 ;
     R_motor.vi_PreError = 0 ;
     R_motor.vi_PreDerror = 0 ;
-    R_motor.v_Kp = 2;
-    R_motor.v_Ki = 20.0f;
-    R_motor.v_Kd = 0;
+    R_motor.v_Kp = 1.2f;
+    R_motor.v_Ki = 1.2f;
+    R_motor.v_Kd =0;
     R_motor.vl_PreU = 0;
 
 }

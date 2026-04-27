@@ -14,7 +14,7 @@ void PID_debug_Init()
     MOTOR_Init();
 //    ICAR_Init();
 
-    float pid_temp[3] = { L_motor.v_Kp, L_motor.v_Ki,  L_motor.v_Kd};
+    float pid_temp[3] = { R_motor.v_Kp, R_motor.v_Ki,  R_motor.v_Kd};
     set_computer_value(SEND_P_I_D_CMD, CURVES_CH1, pid_temp, 3);
     //flashSaveEnable=true;
 
@@ -40,9 +40,9 @@ void PID_debug_get_data(float p,float i,float d)
     piddebug.pidset = true;
 
     //两个电机没必要同时调吧，你接的接口换一下不久行了吗？
-    L_motor.v_Kp = piddebug.Kp;
-    L_motor.v_Ki = piddebug.Ki;
-    L_motor.v_Kd = piddebug.Kd;
+    R_motor.v_Kp = piddebug.Kp;
+    R_motor.v_Ki = piddebug.Ki;
+    R_motor.v_Kd = piddebug.Kd;
 
 }
 
@@ -94,7 +94,7 @@ void PID_debug_Handle()
         int temp1;
         int temp2;
         //set_computer_value(SEND_TARGET_CMD,CURVES_CH1,&(icarStr.SpeedSet),sizeof(icarStr.SpeedSet));
-        temp1=(int)(100*icarStr.SpeedFeedback_L);
+        temp1=(int)(100*icarStr.SpeedFeedback_R);
 //        temp2=(int)(100*icarStr.SpeedFeedback_R);
 
 //        if(temp1>=0)

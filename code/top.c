@@ -81,6 +81,7 @@ void control(void)
     uint8 enc_l_a = gpio_get_level(P10_3);
     uint8 enc_l_b = gpio_get_level(P10_1);
 
+
     ips200pro_label_printf(label_ids[0], "encL=%d", motorStr.EncoderValue_L);
     ips200pro_label_printf(label_ids[1], "encR=%d", motorStr.EncoderValue_R);
     ips200pro_label_printf(label_ids[2], "spdL=%.3f", speed_l);
