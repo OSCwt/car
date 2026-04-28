@@ -48,6 +48,7 @@
 
 #include "top.h"
 #include "attitude_solution.h"
+#include "RemoteControl.h"
 
 #define MODE_ENABLE (1)//模式选择使能，值0时不可选择模式，只执行比赛模式
 #define KALMAN_FILTER (1) //1：使能卡尔曼滤波

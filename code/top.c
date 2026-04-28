@@ -29,6 +29,7 @@ void task_init(void)
     isp_init();
     PID_debug_Init();
     SERVO_Init();
+    RemoteControl_Init();
     Sasu_TIM_Init();
 
     ips200pro_label_printf(label_ids[0], "yaw_rel=%.2f", 0.0f);
@@ -82,19 +83,19 @@ void control(void)
     uint8 enc_l_b = gpio_get_level(P10_1);
 
 
-    ips200pro_label_printf(label_ids[0], "encL=%d", motorStr.EncoderValue_L);
-    ips200pro_label_printf(label_ids[1], "encR=%d", motorStr.EncoderValue_R);
-    ips200pro_label_printf(label_ids[2], "spdL=%.3f", speed_l);
-    ips200pro_label_printf(label_ids[3], "spdR=%.3f", speed_r);
-    ips200pro_label_printf(label_ids[4], "fb=%.3f set=%.3f", icarStr.SpeedFeedback_L, icarStr.SpeedSet);
-    ips200pro_label_printf(label_ids[5], "refL=%.1f refR=%.1f", L_motor.vi_Ref, R_motor.vi_Ref);
-    ips200pro_label_printf(label_ids[6], "pidL=%.1f pidR=%.1f", L_motor.vi_FeedBack, R_motor.vi_FeedBack);
+    ips200pro_label_printf(label_ids[0], "remote=%s lost=%ums", RemoteControl_IsOnline() ? "ON" : "OFF", RemoteControl_GetLostMs());
+    ips200pro_label_printf(label_ids[1], "thr=%d dir=%d", RemoteControl_GetThrottleRaw(), RemoteControl_GetSteerRaw());
+    ips200pro_label_printf(label_ids[2], "key=0x%02X mode=0x%02X", RemoteControl_GetKeyMask(), RemoteControl_GetModeMask());
+    ips200pro_label_printf(label_ids[3], "r_spd=%.3f steer=%.1f", RemoteControl_GetSpeedSet(), RemoteControl_GetSteerOffset());
+    ips200pro_label_printf(label_ids[4], "valid=%u err=%u", (unsigned int)RemoteControl_GetValidCount(), (unsigned int)RemoteControl_GetChecksumError());
+    ips200pro_label_printf(label_ids[5], "fb=%.3f set=%.3f", icarStr.SpeedFeedback_L, icarStr.SpeedSet);
+    ips200pro_label_printf(label_ids[6], "spdL=%.3f spdR=%.3f", speed_l, speed_r);
     ips200pro_label_printf(label_ids[7], "pwmL=%d pwmR=%d", motorStr.PWM_L_value, motorStr.PWM_R_value);
-    ips200pro_label_printf(label_ids[8], "motor_dt=%.1fms cnt=%u", MOTOR_CONTROL_CYCLE * 1000.0f, motorStr.Counter);
-    ips200pro_label_printf(label_ids[9], "pinR A=%u B=%u", enc_r_a, enc_r_b);
-    ips200pro_label_printf(label_ids[10], "pinL A=%u B=%u", enc_l_a, enc_l_b);
-    ips200pro_label_printf(label_ids[11], "yaw=%.2f roll=%.2f", attitudeDebug.yaw_continuous_deg, eulerAngle.roll);
-    ips200pro_label_printf(label_ids[12], "totalL=%d", motorStr.EncoderTotal_L);
-    ips200pro_label_printf(label_ids[13], "totalR=%d", motorStr.EncoderTotal_R);
+    ips200pro_label_printf(label_ids[8], "motor=%s cnt=%u", piddebug.MotorEnable ? "ON" : "OFF", motorStr.Counter);
+    ips200pro_label_printf(label_ids[9], "encL=%d encR=%d", motorStr.EncoderValue_L, motorStr.EncoderValue_R);
+    ips200pro_label_printf(label_ids[10], "pinR A=%u B=%u", enc_r_a, enc_r_b);
+    ips200pro_label_printf(label_ids[11], "pinL A=%u B=%u", enc_l_a, enc_l_b);
+    ips200pro_label_printf(label_ids[12], "yaw=%.2f roll=%.2f", attitudeDebug.yaw_continuous_deg, eulerAngle.roll);
+    ips200pro_label_printf(label_ids[13], "refL=%.1f refR=%.1f", L_motor.vi_Ref, R_motor.vi_Ref);
     ips200pro_label_printf(label_ids[14], "avg10 L=%d R=%d", motorStr.EncoderTotal_L / 10, motorStr.EncoderTotal_R / 10);
 }

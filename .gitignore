@@ -16,12 +16,12 @@ libraries/zf_driver/*
 
 # 4. (可选) 如果你以后想在根目录加说明文档，可以放行 README
 !README.md
-!VERSION_LOG_2026-04-13.md
-!VERSION_LOG*.md
 !HANDOFF.md
 !.gitattributes
 !.editorconfig
 !ENCODING_WORKFLOW.md
+!/version_logs/
+!/version_logs/*.md
 !/tools/
 !/tools/check-encoding.ps1
 !.gitattributes!
