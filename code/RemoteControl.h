@@ -18,7 +18,7 @@
 #define REMOTE_JOY_MAX              (2048.0f)
 #define REMOTE_MAX_SPEED_MPS        (0.8f)
 #define REMOTE_MAX_STEER_DEG        (10.0f)
-#define REMOTE_SPEED_DIR            (-1.0f)
+#define REMOTE_SPEED_DIR            (1.0f)
 #define REMOTE_STEER_DIR            (1.0f)
 #define REMOTE_STEER_DEADBAND_RAW   (80)
 #define REMOTE_STEER_FILTER_ALPHA   (0.20f)
