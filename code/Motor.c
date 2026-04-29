@@ -116,7 +116,7 @@ void MOTOR_ControlLoop(float speed)
     R_motor.vi_Ref = (float)(speed*MOTOR_CONTROL_CYCLE * motorStr.EncoderLine * motorStr.ReductionRatio/ motorStr.DiameterWheel / PI );
 
     MOTOR_SetPwmValue(MOTOR1_PWM_PIN,PID_MoveCalculate(&L_motor),0);
-    MOTOR_SetPwmValue(MOTOR2_PWM_PIN,PID_MoveCalculate(&R_motor),0);
+    MOTOR_SetPwmValue(MOTOR2_PWM_PIN,PID_MoveCalculate(&R_motor),1);
 
 }
 

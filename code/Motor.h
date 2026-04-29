@@ -18,8 +18,8 @@
 #define MOTOR2_DIR_PIN              P02_6
 #define MOTOR2_PWM_PIN              ATOM1_CH7_P02_7
 
-#define MOTOR1_FORWARD_DIR_LEVEL    (0)
-#define MOTOR2_FORWARD_DIR_LEVEL    (0)//1 1 前进 motor1左2右
+#define MOTOR1_FORWARD_DIR_LEVEL    (1)
+#define MOTOR2_FORWARD_DIR_LEVEL    (1)//1 1 前进 motor1左2右
 
 #define USE_NO_DIR_DRIVER (1)  //置1时，使用不带方向的电机驱动
 

@@ -18,7 +18,7 @@
 #define REMOTE_JOY_MAX              (2048.0f)
 #define REMOTE_MAX_SPEED_MPS        (0.8f)
 #define REMOTE_MAX_STEER_DEG        (10.0f)
-#define REMOTE_SPEED_DIR            (1.0f)
+#define REMOTE_SPEED_DIR            (-1.0f)
 #define REMOTE_STEER_DIR            (1.0f)
 
 // 遥控器样例工程发送的 18 字节数据包。

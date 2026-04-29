@@ -85,11 +85,13 @@ signed int PID_MoveCalculate(PIDStruct *pp)
         res_inc = (pp->v_Kp * d_error + pp->v_Ki * error + pp->v_Kd * dd_error);
     }
 
+    float pwm_min = -MOTOR_PWM_MAX;
+
     if (pp->vl_PreU >= MOTOR_PWM_MAX && res_inc > 0)
     {
         res_inc = 0;
     }
-    else if (pp->vl_PreU <= MOTOR_PWM_MIN && res_inc < 0)
+    else if (pp->vl_PreU <= pwm_min && res_inc < 0)
     {
         res_inc = 0;
     }
@@ -98,7 +100,7 @@ signed int PID_MoveCalculate(PIDStruct *pp)
     pp->vl_PreU += res_inc;
 
     if( pp->vl_PreU >= MOTOR_PWM_MAX ) pp->vl_PreU = MOTOR_PWM_MAX;
-    else if( pp->vl_PreU <= MOTOR_PWM_MIN ) pp->vl_PreU = MOTOR_PWM_MIN;
+    else if( pp->vl_PreU <= pwm_min ) pp->vl_PreU = pwm_min;
 
     return (signed int)(pp->vl_PreU);
 }
