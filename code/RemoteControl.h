@@ -20,6 +20,9 @@
 #define REMOTE_MAX_STEER_DEG        (10.0f)
 #define REMOTE_SPEED_DIR            (-1.0f)
 #define REMOTE_STEER_DIR            (1.0f)
+#define REMOTE_STEER_DEADBAND_RAW   (80)
+#define REMOTE_STEER_FILTER_ALPHA   (0.20f)
+#define REMOTE_STEER_MIN_CHANGE_DEG (0.2f)
 
 // 遥控器样例工程发送的 18 字节数据包。
 typedef struct

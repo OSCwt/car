@@ -8,6 +8,8 @@ static RemoteControlPacket remote_latest_packet;
 static uint8 remote_has_valid_packet = 0;
 static uint8 remote_last_key0 = 0;
 static uint8 remote_lost_protected = 1;
+static float remote_steer_filtered = 0.0f;
+static float remote_last_servo_offset = 0.0f;
 
 // 将摇杆值限制在归一化范围内，避免异常数据导致目标值过大。
 static float remote_limit_float(float value, float min_value, float max_value)
@@ -21,6 +23,20 @@ static float remote_limit_float(float value, float min_value, float max_value)
     }
 
     return value;
+}
+
+// 计算浮点数绝对值，避免额外依赖数学库。
+static float remote_abs_float(float value)
+{
+    return (value >= 0.0f) ? value : -value;
+}
+
+// 清空遥控转向滤波状态，避免失联或急停恢复后舵机跳到旧目标。
+static void remote_reset_steer_filter(void)
+{
+    remote_steer_filtered = 0.0f;
+    remote_last_servo_offset = 0.0f;
+    remoteControlStatus.steer_offset = 0.0f;
 }
 
 // 把四个 0/1 字节压成 bit 掩码，方便屏幕调试显示。
@@ -95,6 +111,7 @@ void RemoteControl_Init(void)
     remote_has_valid_packet = 0;
     remote_last_key0 = 0;
     remote_lost_protected = 1;
+    remote_reset_steer_filter();
 
     // 遥控上电前保持安全状态：速度为 0，舵机回中。
     icarStr.SpeedSet = 0.0f;
@@ -147,7 +164,7 @@ void RemoteControl_Timer1ms(void)
     if (remoteControlStatus.lost_ms > REMOTE_LOST_TIMEOUT_MS) {
         remoteControlStatus.online = 0;
         remoteControlStatus.speed_set = 0.0f;
-        remoteControlStatus.steer_offset = 0.0f;
+        remote_reset_steer_filter();
         icarStr.SpeedSet = 0.0f;
         SERVO_Center();
 
@@ -175,20 +192,37 @@ void RemoteControl_Timer1ms(void)
     if (key1) {
         piddebug.MotorEnable = false;
         icarStr.SpeedSet = 0.0f;
+        remote_reset_steer_filter();
         SERVO_Center();
     }
 
     float throttle = remote_limit_float((float)remote_latest_packet.joystick[1] / REMOTE_JOY_MAX, -1.0f, 1.0f);
-    float steer = remote_limit_float((float)remote_latest_packet.joystick[2] / REMOTE_JOY_MAX, -1.0f, 1.0f);
+    int16 steer_raw = remote_latest_packet.joystick[2];
+
+    // 右摇杆方向加入死区，先吃掉零点附近的小抖动。
+    if (steer_raw > -REMOTE_STEER_DEADBAND_RAW && steer_raw < REMOTE_STEER_DEADBAND_RAW) {
+        steer_raw = 0;
+    }
+
+    float steer = remote_limit_float((float)steer_raw / REMOTE_JOY_MAX, -1.0f, 1.0f);
+
+    // 一阶低通滤波，让舵机目标平滑追随摇杆，不跟着每帧噪声抖。
+    remote_steer_filtered += (steer - remote_steer_filtered) * REMOTE_STEER_FILTER_ALPHA;
+
     float speed_set = throttle * REMOTE_MAX_SPEED_MPS * REMOTE_SPEED_DIR;
-    float steer_offset = steer * REMOTE_MAX_STEER_DEG * REMOTE_STEER_DIR;
+    float steer_offset = remote_steer_filtered * REMOTE_MAX_STEER_DEG * REMOTE_STEER_DIR;
 
     remoteControlStatus.speed_set = speed_set;
     remoteControlStatus.steer_offset = steer_offset;
 
     if (!key1) {
         icarStr.SpeedSet = speed_set;
-        SERVO_SetOffset(steer_offset);
+
+        // 目标角变化很小时不重复刷新舵机，减少机械来回找位置。
+        if (remote_abs_float(steer_offset - remote_last_servo_offset) >= REMOTE_STEER_MIN_CHANGE_DEG) {
+            remote_last_servo_offset = steer_offset;
+            SERVO_SetOffset(steer_offset);
+        }
     }
 }
 
