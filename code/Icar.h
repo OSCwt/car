@@ -1,6 +1,9 @@
 #ifndef __SMARTCAR_H__
 #define __SMARTCAR_H__
 
+// KEEP_FOR_BUILD: Icar.h 声明的 IcarStruct / icarStr 仍被新车电机、编码器、遥控和显示路径依赖。
+// LEGACY_OLD_CAR: 旧车自检、冲刺、按键等接口已大多注释，暂作为迁移参考保留。
+
 /*-----------------------------------------  I N C L U D E S  -----------------------------------------*/
 #include "main.h"
 
@@ -10,6 +13,7 @@
 /**
 * @brief    智能车自检步骤
 **/
+// LEGACY_OLD_CAR: 旧车自检步骤枚举，当前新车主路径未启用。
 //typedef enum
 //{
 //    Selfcheck_None = 0,             //开始测试
@@ -33,6 +37,8 @@
 /**
 * @brief    智能车相关
 **/
+// ACTIVE_NEW_CAR: SpeedSet / SpeedFeedback_L / SpeedFeedback_R 当前仍作为新车速度控制和显示状态使用。
+// KEEP_FOR_BUILD: 其余旧字段暂不拆分，避免破坏旧模块编译依赖。
 typedef struct                              //[智能车驱动主板]
 {
     float Voltage;                          //电池电压
@@ -62,6 +68,7 @@ typedef struct                              //[智能车驱动主板]
 extern IcarStruct icarStr;
 
 
+// LEGACY_OLD_CAR: 以下旧车 ICAR 接口当前未启用，后续可考虑条件编译隔离。
 //void ICAR_Init(void);
 //void ICAR_Timer(void);
 //void ICAR_Handle(void);

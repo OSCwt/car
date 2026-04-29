@@ -1,4 +1,7 @@
 #include "Icar.h"
+// KEEP_FOR_BUILD: Icar.c 当前仍参与工程编译，且提供 icarStr 全局状态。
+// ACTIVE_NEW_CAR: 新车当前仍使用 icarStr.SpeedSet / SpeedFeedback_L / SpeedFeedback_R 等状态。
+// LEGACY_OLD_CAR: 本文件下方大量自检、冲刺、按键和旧通信逻辑是旧车遗留，先保留作迁移参考。
 //
 ///*
 //********************************************************************************************************
@@ -15,6 +18,7 @@
 //*/
 //
 //
+// KEEP_FOR_BUILD: icarStr 被 Encoder、Motor、RemoteControl、top、cpu0_main 等模块引用，不能直接删除。
 IcarStruct icarStr;
 //
 ///**
@@ -38,6 +42,8 @@ void ICAR_Init(void)
 //
 //
 //
+// LEGACY_OLD_CAR: 以下 ICAR_Timer/ICAR_Handle/自检等逻辑来自旧车流程，新车当前主路径不直接启用。
+// KEEP_FOR_BUILD: 暂不删除这些注释块，避免迁移过程中丢失旧功能含义和后续对照依据。
 ///**
 //* @brief        智能车综合处理线程计数器
 //* @param

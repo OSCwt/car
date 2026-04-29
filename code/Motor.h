@@ -6,7 +6,7 @@
 
 /*---------------------------------------  D E F I N I T I O N  ---------------------------------------*/
 
-#define  MOTOR_PWM_MAX              (PWM_DUTY_MAX*0.2)        //OCR=95%,禁止满占空比输出，造成MOS损坏
+#define  MOTOR_PWM_MAX              (PWM_DUTY_MAX*0.7)        //OCR=95%,禁止满占空比输出，造成MOS损坏
 #define  MOTOR_PWM_MIN              0       //OCR=95%
 #define  MOTOR_SPEED_MAX            10.0f       //电机最大转速(m/s) (0.017,8.04)
 //#define  PI                         3.141593f   //π

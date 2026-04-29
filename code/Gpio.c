@@ -5,11 +5,14 @@
  *      作者: 画家
  */
 #include "Gpio.h"
+// LEGACY_OLD_CAR: 旧车按键、LED、蜂鸣器外设线程，新车当前主控制路径不优先依赖。
+// KEEP_FOR_BUILD: 本文件仍参与编译，且旧车自检/提示音逻辑有历史引用，暂不删除。
 GpioStruct gpioStr;
 BuzzerStruct buzzerStr;
 
 void GPIO_Initialize(void)
 {
+    // LEGACY_OLD_CAR: 旧车按键、LED、蜂鸣器初始化入口。
     //蜂鸣器IO初始化
     gpio_init(P33_10,GPO,GPIO_LOW,GPO_PUSH_PULL);
 
@@ -40,6 +43,7 @@ void GPIO_Initialize(void)
 
 void GPIO_Timer(void)
 {
+    // LEGACY_OLD_CAR: 旧车外设 1ms 线程，当前 SasuTimer.c 中对应调用已在旧模式分支里注释。
     //蜂鸣器控制
     if(buzzerStr.Enable)
     {
@@ -83,6 +87,7 @@ void GPIO_Timer(void)
 }
 void GPIO_Handle(void)
 {
+    // LEGACY_OLD_CAR: 旧车外设后台处理入口，当前新车主循环未直接调用。
     //蜂鸣器控制
     if(buzzerStr.Enable && !buzzerStr.Silent)
     {
@@ -111,6 +116,7 @@ void GPIO_Handle(void)
 }
 void GPIO_BuzzerEnable(BuzzerEnum buzzer)
 {
+    // KEEP_FOR_BUILD: 旧车自检代码中仍保留对该接口的历史引用，隔离前不要删除。
     switch(buzzer)
     {
         case BuzzerOk:

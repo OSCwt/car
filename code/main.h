@@ -13,6 +13,9 @@
 #ifndef __MAIN_H__
 #define __MAIN_H__
 
+// KEEP_FOR_BUILD: main.h 是当前业务模块聚合头，许多 .c/.h 通过它间接获得类型、宏和函数声明。
+// ACTIVE_NEW_CAR: 新车主路径仍依赖 Motor、Encoder、Servo、RemoteControl、SasuTimer、PID_debug、top 等 include。
+// LEGACY_OLD_CAR: 部分 include 来自旧车迁移保留，整理前不要为了“看起来干净”直接删除。
 
 //typedef enum { false = 0,true = 1} bool;
 
@@ -26,15 +29,20 @@
 #include "zf_common_headfile.h"
 
 /*************************USER_MODULES***********************************************/
+// KEEP_FOR_BUILD: 以下 include 同时承担编译依赖聚合功能，删除前必须确认工程配置、全局变量和 ISR 依赖。
 #include "isr_config.h"
 #include "Delay.h"
+// ACTIVE_NEW_CAR: 编码器、电机、PID、定时器、舵机、遥控和显示为当前新车主路径。
 #include "Encoder.h"
+// LEGACY_OLD_CAR / KEEP_FOR_BUILD: Gpio 当前偏旧车外设线程，仍被聚合 include 保留。
 #include "Gpio.h"
 #include "Pid.h"
 #include "Motor.h"
+// LEGACY_OLD_CAR: Flash/Soc/Icar_Sys/Rgb/Usb/ps2/ModeCtr 等旧车模块当前未启用。
 //#include "Flash.h"
 //#include "Soc.h"
 #include "SasuTimer.h"
+// KEEP_FOR_BUILD: Icar.h 提供 icarStr 状态结构，新车速度控制仍依赖该全局状态。
 #include "Icar.h"
 //#include "Icar_Sys.h"
 #include "Servo.h"
